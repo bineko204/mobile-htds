@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:htds_mobile/app/core/values/app_values.dart';
 
-import '/app/core/values/text_styles.dart';
 
 class CustomTextField extends StatefulWidget {
   final String? label;
   final String formControlName;
   final Function? onChange;
   final String? type;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
 
   const CustomTextField(
       {Key? key,
       this.label,
       required this.formControlName,
       this.onChange,
+      this.prefixIcon,
+      this.suffixIcon,
       this.type})
       : super(key: key);
 
@@ -49,12 +52,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
           obscureText: !_isPasswordVisible && widget.type == "password",
           name: widget.formControlName,
           decoration: InputDecoration(
+            prefixIcon: widget.prefixIcon,
             suffixIcon: widget.type == "password" ? IconButton(
               icon: Icon(
                 _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
               ),
               onPressed: _togglePasswordVisibility,
-            ) : null,
+            ) : widget.suffixIcon,
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: AppValues.smallPadding),
             border: OutlineInputBorder(

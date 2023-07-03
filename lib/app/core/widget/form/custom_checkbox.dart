@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:htds_mobile/app/core/values/app_values.dart';
 
-import '/app/core/values/text_styles.dart';
 
 class CustomCheckbox extends StatelessWidget {
   final String? label;
@@ -24,7 +22,7 @@ class CustomCheckbox extends StatelessWidget {
       activeColor: Colors.black,
       // contentPadding: EdgeInsets.zero,
       title: Text(
-        label! ?? "",
+        label!,
         style: const TextStyle(fontWeight: FontWeight.w500),
       ),
     );

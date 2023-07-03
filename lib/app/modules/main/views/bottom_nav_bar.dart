@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '/app/core/values/app_colors.dart';
 import '/app/core/values/app_values.dart';
 import '/app/modules/main/controllers/bottom_nav_controller.dart';
 import '/app/modules/main/model/menu_code.dart';
