@@ -1,0 +1,1 @@
+enum MenuCode { HOME, REPORT, FAVORITE, SETTINGS }
