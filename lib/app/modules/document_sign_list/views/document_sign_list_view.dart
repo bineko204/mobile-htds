@@ -1,6 +1,9 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:htds_mobile/app/core/values/app_values.dart';
-import 'package:htds_mobile/app/core/widget/form/custom_text_field.dart';
+import 'package:htds_mobile/app/core/widget/search.dart';
+import 'package:htds_mobile/app/modules/document_sign_list/widgets/general_lookup/general_lookup_view.dart';
 
 import '/app/core/base/base_view.dart';
 import '/app/core/widget/custom_app_bar.dart';
@@ -33,24 +36,7 @@ class DocumentSignListView extends BaseView<DocumentSignListController> {
   Widget body(BuildContext context) {
     return TabBarView(
       children: [
-        Container(
-          padding: const EdgeInsets.all(AppValues.largePadding),
-          child: const Column(
-            children: [
-              CustomTextField(
-                formControlName: "searchKey",
-                suffixIcon: Icon(
-                  Icons.clear,
-                  size: 30,
-                ),
-                prefixIcon: Icon(
-                  Icons.search,
-                  size: 30,
-                ),
-              )
-            ],
-          ),
-        ),
+        GeneralLookupView(),
         const Icon(Icons.directions_transit),
       ],
     );

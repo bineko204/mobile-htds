@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
+import 'user_model.dart';
 
 void main() => runApp(MyApp());
 
@@ -539,37 +540,37 @@ class _MyHomePageState extends State<MyHomePage> {
                       trailing: item.subLevel.isEmpty
                           ? null
                           : (item.isExpanded
-                          ? IconButton(
-                        icon: Icon(Icons.arrow_drop_down),
-                        onPressed: () {
-                          item.isExpanded = !item.isExpanded;
-                          myKey.currentState?.updatePopupState();
-                        },
-                      )
-                          : IconButton(
-                        icon: Icon(Icons.arrow_right),
-                        onPressed: () {
-                          item.isExpanded = !item.isExpanded;
-                          myKey.currentState?.updatePopupState();
-                        },
-                      )),
+                              ? IconButton(
+                                  icon: Icon(Icons.arrow_drop_down),
+                                  onPressed: () {
+                                    item.isExpanded = !item.isExpanded;
+                                    myKey.currentState?.updatePopupState();
+                                  },
+                                )
+                              : IconButton(
+                                  icon: Icon(Icons.arrow_right),
+                                  onPressed: () {
+                                    item.isExpanded = !item.isExpanded;
+                                    myKey.currentState?.updatePopupState();
+                                  },
+                                )),
                       subtitle: item.subLevel.isNotEmpty && item.isExpanded
                           ? Container(
-                        height: item.subLevel.length * 50,
-                        child: ListView(
-                          children: item.subLevel
-                              .map(
-                                (e) => ListTile(
-                              selected: myKey.currentState?.getSelectedItem?.level1 == e.level1,
-                              title: Text(e.level1),
-                              onTap: () {
-                                myKey.currentState?.popupValidate([e]);
-                              },
-                            ),
-                          )
-                              .toList(),
-                        ),
-                      )
+                              height: item.subLevel.length * 50,
+                              child: ListView(
+                                children: item.subLevel
+                                    .map(
+                                      (e) => ListTile(
+                                        selected: myKey.currentState?.getSelectedItem?.level1 == e.level1,
+                                        title: Text(e.level1),
+                                        onTap: () {
+                                          myKey.currentState?.popupValidate([e]);
+                                        },
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            )
                           : null,
                       onTap: () => myKey.currentState?.popupValidate([item]),
                     );
@@ -619,10 +620,10 @@ class _MyHomePageState extends State<MyHomePage> {
       decoration: !isSelected
           ? null
           : BoxDecoration(
-        border: Border.all(color: Theme.of(context).primaryColor),
-        borderRadius: BorderRadius.circular(5),
-        color: Colors.white,
-      ),
+              border: Border.all(color: Theme.of(context).primaryColor),
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.white,
+            ),
       child: ListTile(
         selected: isSelected,
         title: Text(item.name),
@@ -738,50 +739,4 @@ class MultiLevelString {
 
   @override
   String toString() => level1;
-}
-
-
-class UserModel {
-  final String id;
-  final DateTime createdAt;
-  final String name;
-  final String avatar;
-
-  UserModel({
-    required this.id,
-    required this.createdAt,
-    required this.name,
-    required this.avatar,
-  });
-
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      id: json["id"],
-      createdAt: DateTime.parse(json["createdAt"]),
-      name: json["name"],
-      avatar: json["avatar"],
-    );
-  }
-
-  static List<UserModel> fromJsonList(List list) {
-    return list.map((item) => UserModel.fromJson(item)).toList();
-  }
-
-  ///this method will prevent the override of toString
-  String userAsString() {
-    return '#${this.id} ${this.name}';
-  }
-
-  ///this method will prevent the override of toString
-  bool userFilterByCreationDate(String filter) {
-    return this.createdAt.toString().contains(filter);
-  }
-
-  ///custom comparing function to check if two users are equal
-  bool isEqual(UserModel model) {
-    return this.id == model.id;
-  }
-
-  @override
-  String toString() => name;
 }
