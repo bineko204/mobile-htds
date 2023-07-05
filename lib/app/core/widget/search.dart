@@ -1,18 +1,39 @@
-
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 class SearchItem {
   String? label;
   String? type;
   int? value;
-  SearchItem({this.label,this.value, this.type});
+
+  SearchItem({this.label, this.value, this.type});
 }
 
-class CustomDropdownSearch<T extends SearchItem> extends StatelessWidget {
+class CustomDropdownSearch<T extends SearchItem> extends StatefulWidget {
   final List<T> items;
-  final RxList<T> selectedItem;
-  const CustomDropdownSearch({Key? key, required this.items, required this.selectedItem}) : super(key: key);
+  final Function? onChange;
+  final List<T>? selectedItem;
+  const CustomDropdownSearch({Key? key, required this.items, this.onChange, this.selectedItem})
+      : super(key: key);
+
+  @override
+  State<CustomDropdownSearch<T>> createState() =>
+      _CustomDropdownSearchState<T>();
+}
+
+class _CustomDropdownSearchState<T extends SearchItem>
+    extends State<CustomDropdownSearch<T>> {
+  List<T> selectedItem = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      selectedItem = widget.selectedItem ?? [];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +48,8 @@ class CustomDropdownSearch<T extends SearchItem> extends StatelessWidget {
       clearButtonProps: const ClearButtonProps(
         isVisible: true,
       ),
-      dropdownButtonProps: const DropdownButtonProps(
-          isVisible: false
-      ),
-      items: items,
+      dropdownButtonProps: const DropdownButtonProps(isVisible: false),
+      items: widget.items,
       popupProps: PopupPropsMultiSelection.menu(
         showSearchBox: true,
         showSelectedItems: true,
@@ -41,8 +60,7 @@ class CustomDropdownSearch<T extends SearchItem> extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: ElevatedButton(
                 onPressed: () {
-                  popupCustomValidationKey.currentState
-                      ?.popupOnValidate();
+                  popupCustomValidationKey.currentState?.popupOnValidate();
                 },
                 child: const Text("Tìm kiếm"),
               ),
@@ -53,28 +71,38 @@ class CustomDropdownSearch<T extends SearchItem> extends StatelessWidget {
             decoration: InputDecoration(
                 isDense: true,
                 border: OutlineInputBorder(),
-                hintText: "Nhập tên"
-            )
-        ),
+                hintText: "Nhập tên")),
         itemBuilder: (ctx, item, isSelected) {
           // const title = getProperty(item, name)
           return ListTile(
             selected: isSelected,
             title: Text(item.label ?? item.toString()),
             dense: true,
-            trailing: Text(item.type ?? "", style: const TextStyle(fontSize: 12),),
+            trailing: Text(
+              item.type ?? "",
+              style: const TextStyle(fontSize: 12),
+            ),
           );
         },
       ),
       onChanged: (List<T> values) {
-        selectedItem.clear();
-        selectedItem.addAll(values);
+        setState(() {
+          selectedItem = values;
+        });
+        if (widget.onChange != null) {
+          widget.onChange!(values);
+        }
       },
-      selectedItems: selectedItem.value,
+      selectedItems: selectedItem,
       dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(
             contentPadding: const EdgeInsets.only(left: 12, top: 12),
-            prefixIcon: selectedItem.isNotEmpty ? null : const Icon(Icons.search, size: 30,),
+            prefixIcon: selectedItem.isNotEmpty
+                ? null
+                : const Icon(
+                    Icons.search,
+                    size: 30,
+                  ),
             hintText: "Tìm kiếm",
             isDense: true,
             hintStyle: const TextStyle(fontSize: 14),

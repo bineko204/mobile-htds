@@ -11,15 +11,15 @@ Document documentFromJson(String str) => Document.fromJson(json.decode(str));
 String documentToJson(Document data) => json.encode(data.toJson());
 
 class Document extends SearchItem {
-  final String? name;
-  final String? partner;
-  final int? status;
+  String? name;
+  String? partner;
+  int? status;
   @override
-  final String? label;
+  String? label;
   @override
-  final int? value;
+  int? value;
   @override
-  final String? type;
+  String? type;
 
   Document({
     this.name,

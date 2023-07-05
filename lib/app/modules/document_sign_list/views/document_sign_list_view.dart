@@ -35,6 +35,7 @@ class DocumentSignListView extends BaseView<DocumentSignListController> {
   @override
   Widget body(BuildContext context) {
     return TabBarView(
+      physics: const NeverScrollableScrollPhysics(),
       children: [
         GeneralLookupView(),
         const Icon(Icons.directions_transit),
