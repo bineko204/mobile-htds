@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:htds_mobile/app/core/values/app_values.dart';
+import 'package:htds_mobile/app/modules/document_sign_list/widgets/detail_popup/detail_popup.dart';
 
 import '../../../../core/model/document.dart';
 import '../../../../core/widget/datatable.dart';
@@ -31,7 +32,7 @@ class GeneralLookupController extends BaseController {
     DataTableHeader(title: "status", columnDef: "status"),
     DataTableHeader(title: "label", columnDef: "label"),
     DataTableHeader(title: "value", columnDef: "value"),
-    DataTableHeader(title: "", columnDef: "type"),
+    DataTableHeader(title: "type", columnDef: "type"),
     DataTableHeader(
         title: "",
         columnDef: "",
@@ -109,49 +110,7 @@ class GeneralLookupController extends BaseController {
         listDocument[index].status = 1;
         listDocument.refresh();
         Get.dialog(
-            AlertDialog(
-              insetPadding: const EdgeInsets.all(AppValues.largePadding),
-              title: Container(
-                decoration: const BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.grey))),
-                padding: const EdgeInsets.all(AppValues.smallPadding),
-                child: Row(
-                  children: [
-                    const Text(
-                      "Chi Tiết biên bản",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(
-                      width: AppValues.smallPadding,
-                    ),
-                    SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: SvgPicture.asset(
-                          "images/bookmark.svg",
-                          color: Colors.grey,
-                        )),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                          padding: EdgeInsets.zero,
-                          constraints: BoxConstraints(),
-                          onPressed: () {
-                            Get.back();
-                          },
-                          icon: Icon(Icons.clear),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              titlePadding: EdgeInsets.zero,
-              content: SizedBox(
-                  width: Get.width - (AppValues.largePadding * 2),
-                  child: const Text("content")),
-            ),
+            DetailPopup(data: data),
             barrierDismissible: false);
       },
       child: Container(

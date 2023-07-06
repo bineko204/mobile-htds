@@ -9,12 +9,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final TabBar? bottom;
   final List<Widget>? actions;
   final bool isBackButtonEnabled;
+  final Widget? leading;
 
   CustomAppBar({
     Key? key,
     this.appBarTitleText,
     this.actions,
     this.bottom,
+    this.leading,
     this.isBackButtonEnabled = true,
   }) : super(key: key);
 
@@ -28,6 +30,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: false,
       elevation: 1,
       automaticallyImplyLeading: isBackButtonEnabled,
+      leading: leading,
       actions: actions,
       bottom: bottom,
       iconTheme: const IconThemeData(color: AppColors.appBarIconColor),

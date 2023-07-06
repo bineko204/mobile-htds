@@ -9,6 +9,7 @@ abstract class Routes {
   static const RESET_PASSWORD = _Paths.RESET_PASSWORD;
   static const HOME = _Paths.HOME;
   static const DOCUMENT_SIGN_LIST = _Paths.DOCUMENT_SIGN_LIST;
+  static const VIEW_PDF = _Paths.VIEW_PDF;
   static const FAVORITE = _Paths.FAVORITE;
   static const SETTINGS = _Paths.SETTINGS;
   static const OTHER = _Paths.OTHER;
@@ -21,6 +22,7 @@ abstract class _Paths {
   static const RESET_PASSWORD = '/reset-password';
   static const HOME = '/home';
   static const DOCUMENT_SIGN_LIST = '/document-sign-list';
+  static const VIEW_PDF = '/view-pdf';
   static const FAVORITE = '/favorite';
   static const SETTINGS = '/settings';
   static const OTHER = '/other';

@@ -4,8 +4,10 @@ import 'package:htds_mobile/app/modules/document_sign_list/views/document_sign_l
 import 'package:htds_mobile/app/modules/login/bindings/login_binding.dart';
 import 'package:htds_mobile/app/modules/login/views/login_view.dart';
 import 'package:htds_mobile/app/modules/reset_password/views/reset_password_view.dart';
+import 'package:htds_mobile/app/modules/view_pdf/bindings/view_pdf_binding.dart';
 
 import '../modules/reset_password/bindings/reset_password_binding.dart';
+import '../modules/view_pdf/views/view_pdf_view.dart';
 import '/app/modules/favorite/bindings/favorite_binding.dart';
 import '/app/modules/favorite/views/favorite_view.dart';
 import '/app/modules/home/bindings/home_binding.dart';
@@ -51,6 +53,11 @@ class AppPages {
       name: _Paths.DOCUMENT_SIGN_LIST,
       page: () => DocumentSignListView(),
       binding: DocumentSignListBinding(),
+    ),
+    GetPage(
+      name: _Paths.VIEW_PDF,
+      page: () => ViewPdfView(),
+      binding: ViewPdfBinding(),
     ),
     GetPage(
       name: _Paths.FAVORITE,
