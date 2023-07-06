@@ -6,6 +6,7 @@ import 'package:htds_mobile/app/modules/login/views/login_view.dart';
 import 'package:htds_mobile/app/modules/reset_password/views/reset_password_view.dart';
 import 'package:htds_mobile/app/modules/view_pdf/bindings/view_pdf_binding.dart';
 
+import '../core/base/orientation_controller.dart';
 import '../modules/reset_password/bindings/reset_password_binding.dart';
 import '../modules/view_pdf/views/view_pdf_view.dart';
 import '/app/modules/favorite/bindings/favorite_binding.dart';

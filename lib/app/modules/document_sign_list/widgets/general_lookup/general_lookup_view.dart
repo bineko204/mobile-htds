@@ -69,11 +69,14 @@ class GeneralLookupView extends BaseView<GeneralLookupController> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     border: Border.all(color: Colors.grey.withOpacity(0.3))),
-                child: MyDataTable(
-                  columns: controller.listDocument.value
-                      .map((e) => e.toJson())
-                      .toList(),
-                  headers: controller.headers,
+                child: Obx(
+                  () => MyDataTable(
+                    columns: controller.listDocument.value
+                    .where((element) => controller.showPinned.value ? element.status == 1 : true)
+                        .map((e) => e.toJson())
+                        .toList(),
+                    headers: controller.headers,
+                  ),
                 ),
               ),
             ]),

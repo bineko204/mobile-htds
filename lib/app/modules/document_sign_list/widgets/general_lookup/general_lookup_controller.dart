@@ -96,7 +96,7 @@ class GeneralLookupController extends BaseController {
       },
       child: SvgPicture.asset(
         'images/bookmark.svg',
-        color: data["status"] == 0
+        color: data["status"] == 1
             ? const Color(0xFFEF0032)
             : const Color(0xFF9E9E9E),
       ),

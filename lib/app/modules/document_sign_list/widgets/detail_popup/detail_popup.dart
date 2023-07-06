@@ -131,6 +131,7 @@ class _DetailPopupState extends State<DetailPopup> {
               style: TextStyle(color: Colors.black, fontSize: 12))),
       ElevatedButton(
           onPressed: () {
+            Get.back();
             Get.dialog(ViewReportPopup(), barrierDismissible: false);
           },
           style: ElevatedButton.styleFrom(

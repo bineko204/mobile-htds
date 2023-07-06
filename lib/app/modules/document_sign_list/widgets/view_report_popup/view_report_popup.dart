@@ -73,6 +73,7 @@ class _ViewReportPopupState extends State<ViewReportPopup> {
       padding: const EdgeInsets.only(top: AppValues.smallPadding),
       child: InkWell(
         onTap: () {
+          Get.back();
           Get.toNamed(Routes.VIEW_PDF);
         },
         child: Text(
