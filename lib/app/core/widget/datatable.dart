@@ -9,7 +9,6 @@ class DataTableHeader {
   final bool? fixedRight;
   final Function? renderer;
   final double? width;
-
   DataTableHeader(
       {this.title,
       this.columnDef,
@@ -22,8 +21,9 @@ class DataTableHeader {
 class MyDataTable extends StatefulWidget {
   final List<DataTableHeader> headers;
   final List<Map<String, dynamic>> columns;
+  final int displayColumnNumber;
 
-  const MyDataTable({super.key, required this.headers, required this.columns});
+  const MyDataTable({super.key, required this.headers, required this.columns, this.displayColumnNumber = 4});
 
   @override
   State<MyDataTable> createState() => _MyDataTableState();
@@ -65,155 +65,149 @@ class _MyDataTableState extends State<MyDataTable> {
     if (widget.headers == null || widget.headers.isEmpty) {
       return Container();
     }
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: Colors.grey.withOpacity(0.3))
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // first table -> will give Serial number and count
-          fixedLeftHeader != null
-              ? DataTable(
-                  horizontalMargin: 10,
-                  headingRowHeight: 45,
-                  dataRowHeight: 40,
-                  columnSpacing: 0,
-                  dividerThickness: 0,
-                  columns: [
-                    DataColumn(
-                      label: SizedBox(
-                        width: fixedLeftHeader!.width ?? 100,
-                        child: Text(
-                          fixedLeftHeader?.title ?? "",
-                          style: const TextStyle(fontSize: 12),
-                        ),
-                      ),
-                    ),
-                  ],
-                  rows: widget.columns.map(
-                    (e) {
-                      final data = e[fixedLeftHeader!.columnDef].toString();
-                      final index = widget.columns.indexOf(e);
-                      return DataRow(
-                        cells: [
-                          DataCell(
-                            SizedBox(
-                              width: fixedLeftHeader!.width ?? 100,
-                              child: fixedLeftHeader!.renderer != null
-                                  ? fixedLeftHeader!.renderer!(e, index)
-                                  : Text(
-                                      data,
-                                      style: const TextStyle(fontSize: 12),
-                                    ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ).toList(),
-                )
-              : Container(),
-
-          // cental DataTable which will scrolling
-          // here use centerHeader (List)
-          // Flexible -> SingleChildScrollView for scrolling purpose
-          Flexible(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTable(
-                horizontalMargin: 0,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // first table -> will give Serial number and count
+        fixedLeftHeader != null
+            ? DataTable(
+                horizontalMargin: 10,
                 headingRowHeight: 45,
-                // decoration: BoxDecoration(
-                //   borderRadius: BorderRadius.circular(5),
-                //   // border: Border.all(color: Colors.grey),
-                // ),
                 dataRowHeight: 40,
                 columnSpacing: 0,
                 dividerThickness: 0,
-                columns: centerHeader.map(
-                  (e) {
-                    return DataColumn(
-                      label: SizedBox(
-                        width: centerColumnWidth,
-                        child: Text(
-                          e.title ?? "",
-                          style: const TextStyle(fontSize: 12),
-                        ),
+                columns: [
+                  DataColumn(
+                    label: SizedBox(
+                      width: fixedLeftHeader!.width ?? 100,
+                      child: Text(
+                        fixedLeftHeader?.title ?? "",
+                        style: const TextStyle(fontSize: 12),
                       ),
+                    ),
+                  ),
+                ],
+                rows: widget.columns.map(
+                  (e) {
+                    final data = e[fixedLeftHeader!.columnDef].toString();
+                    final index = widget.columns.indexOf(e);
+                    return DataRow(
+                      cells: [
+                        DataCell(
+                          SizedBox(
+                            width: fixedLeftHeader!.width ?? 100,
+                            child: fixedLeftHeader!.renderer != null
+                                ? fixedLeftHeader!.renderer!(e, index)
+                                : Text(
+                                    data,
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
+                          ),
+                        ),
+                      ],
                     );
                   },
                 ).toList(),
-                rows: widget.columns.map(
-                  (col) {
-                    final index = widget.columns.indexOf(col);
-                    return DataRow(
-                        cells: centerHeader
-                            .map((header) => DataCell(header.renderer != null
-                                ? header.renderer!(col, index)
-                                : SizedBox(
-                                    width: centerColumnWidth,
-                                    child: Text(
-                                      col[header.columnDef].toString(),
-                                      style: const TextStyle(fontSize: 12),
-                                    ))))
-                            .toList());
-                  },
-                ).toList(),
-              ),
+              )
+            : Container(),
+
+        // cental DataTable which will scrolling
+        // here use centerHeader (List)
+        // Flexible -> SingleChildScrollView for scrolling purpose
+        Flexible(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              horizontalMargin: 0,
+              headingRowHeight: 45,
+              // decoration: BoxDecoration(
+              //   borderRadius: BorderRadius.circular(5),
+              //   // border: Border.all(color: Colors.grey),
+              // ),
+              dataRowHeight: 40,
+              columnSpacing: 0,
+              dividerThickness: 0,
+              columns: centerHeader.map(
+                (e) {
+                  return DataColumn(
+                    label: SizedBox(
+                      width: centerColumnWidth,
+                      child: Text(
+                        e.title ?? "",
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  );
+                },
+              ).toList(),
+              rows: widget.columns.map(
+                (col) {
+                  final index = widget.columns.indexOf(col);
+                  return DataRow(
+                      cells: centerHeader
+                          .map((header) => DataCell(header.renderer != null
+                              ? header.renderer!(col, index)
+                              : SizedBox(
+                                  width: centerColumnWidth,
+                                  child: Text(
+                                    col[header.columnDef].toString(),
+                                    style: const TextStyle(fontSize: 12),
+                                  ))))
+                          .toList());
+                },
+              ).toList(),
             ),
           ),
+        ),
 
-          // Last(third) DataTable
-          fixedRightHeader != null
-              ? DataTable(
-                  horizontalMargin: 10,
-                  headingRowHeight: 45,
-                  dataRowHeight: 40,
-                  columnSpacing: 0,
+        // Last(third) DataTable
+        fixedRightHeader != null
+            ? DataTable(
+                horizontalMargin: 10,
+                headingRowHeight: 45,
+                dataRowHeight: 40,
+                columnSpacing: 0,
 
-                  dividerThickness: 0,
-                  // border: TableBorder(
-                  //   borderRadius: BorderRadius.circular(5),
-                  // ),
-                  columns: [
-                    DataColumn(
-                      label: SizedBox(
-                        width: fixedRightHeader!.width ?? 100,
-                        child: Text(
-                          fixedRightHeader!.title ?? "",
-                          style: const TextStyle(fontSize: 12),
-                        ),
+                dividerThickness: 0,
+                // border: TableBorder(
+                //   borderRadius: BorderRadius.circular(5),
+                // ),
+                columns: [
+                  DataColumn(
+                    label: SizedBox(
+                      width: fixedRightHeader!.width ?? 100,
+                      child: Text(
+                        fixedRightHeader!.title ?? "",
+                        style: const TextStyle(fontSize: 12),
                       ),
-                    )
-                  ],
-                  rows: widget.columns.map(
-                    (col) {
-                      final data =
-                          col[fixedRightHeader!.columnDef].toString();
-                      final index = widget.columns.indexOf(col);
-                      return DataRow(
-                        cells: [
-                          DataCell(
-                            SizedBox(
-                              width: fixedRightHeader!.width ?? 100,
-                              child: fixedRightHeader!.renderer != null
-                                  ? fixedRightHeader!.renderer!(col, index)
-                                  : Text(
-                                      data,
-                                      style: const TextStyle(fontSize: 12),
-                                    ),
-                            ),
-                          )
-                        ],
-                      );
-                    },
-                  ).toList(),
-                )
-              : Container(),
-        ],
-      ),
+                    ),
+                  )
+                ],
+                rows: widget.columns.map(
+                  (col) {
+                    final data =
+                        col[fixedRightHeader!.columnDef].toString();
+                    final index = widget.columns.indexOf(col);
+                    return DataRow(
+                      cells: [
+                        DataCell(
+                          SizedBox(
+                            width: fixedRightHeader!.width ?? 100,
+                            child: fixedRightHeader!.renderer != null
+                                ? fixedRightHeader!.renderer!(col, index)
+                                : Text(
+                                    data,
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
+                          ),
+                        )
+                      ],
+                    );
+                  },
+                ).toList(),
+              )
+            : Container(),
+      ],
     );
   }
 
@@ -232,7 +226,7 @@ class _MyDataTableState extends State<MyDataTable> {
                 ? (fixedRightWidth + 20)
                 : 0) // fixed right + padding header
         ) /
-        4;
+        widget.displayColumnNumber;
     return result;
   }
 }

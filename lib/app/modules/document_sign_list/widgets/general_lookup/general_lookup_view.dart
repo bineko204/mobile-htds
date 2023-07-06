@@ -20,7 +20,7 @@ class GeneralLookupView extends BaseView<GeneralLookupController> {
   Widget body(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-          horizontal: AppValues.largePadding, vertical: AppValues.smallPadding),
+          horizontal: AppValues.smallPadding, vertical: AppValues.smallPadding),
       child: Column(
         children: [
           Row(
@@ -64,12 +64,17 @@ class GeneralLookupView extends BaseView<GeneralLookupController> {
             height: AppValues.smallPadding,
           ),
           Expanded(
-            child: ListView(children: [
-              MyDataTable(
-                columns: controller.listDocument.value
-                    .map((e) => e.toJson())
-                    .toList(),
-                headers: controller.headers,
+            child: ListView(shrinkWrap: true, children: [
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(color: Colors.grey.withOpacity(0.3))),
+                child: MyDataTable(
+                  columns: controller.listDocument.value
+                      .map((e) => e.toJson())
+                      .toList(),
+                  headers: controller.headers,
+                ),
               ),
             ]),
           ),

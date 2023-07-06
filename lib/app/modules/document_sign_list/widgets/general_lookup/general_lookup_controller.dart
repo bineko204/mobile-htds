@@ -45,7 +45,7 @@ class GeneralLookupController extends BaseController {
   void onInit() {
     super.onInit();
     Future.delayed(
-        const Duration(seconds: 2),
+        const Duration(milliseconds: 500),
         () => {
               listDocument.addAll([
                 Document(
