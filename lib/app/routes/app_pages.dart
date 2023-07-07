@@ -7,6 +7,7 @@ import 'package:htds_mobile/app/modules/reset_password/views/reset_password_view
 import 'package:htds_mobile/app/modules/view_pdf/bindings/view_pdf_binding.dart';
 
 import '../core/base/orientation_controller.dart';
+import '../modules/document_sign_list/views/document_sign_list_fullscreen_view.dart';
 import '../modules/reset_password/bindings/reset_password_binding.dart';
 import '../modules/view_pdf/views/view_pdf_view.dart';
 import '/app/modules/favorite/bindings/favorite_binding.dart';
@@ -53,6 +54,11 @@ class AppPages {
     GetPage(
       name: _Paths.DOCUMENT_SIGN_LIST,
       page: () => DocumentSignListView(),
+      binding: DocumentSignListBinding(),
+    ),
+    GetPage(
+      name: _Paths.DOCUMENT_SIGN_LIST_FULLSCREEN,
+      page: () => DocumentSignListFullscreenView(),
       binding: DocumentSignListBinding(),
     ),
     GetPage(

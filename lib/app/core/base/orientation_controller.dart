@@ -53,9 +53,11 @@ class NavigatorObserverWithOrientation extends NavigatorObserver {
       return;
     }
     switch (route.settings.name) {
-      // case Routes.MAIN:
-      //   _setOrientation(ScreenOrientation.landscapeOnly);
-      //   break;
+      case null:
+        break;
+      case Routes.DOCUMENT_SIGN_LIST_FULLSCREEN:
+        _setOrientation(ScreenOrientation.landscapeOnly);
+        break;
       default:
         _setOrientation(ScreenOrientation.portraitOnly);
         break;

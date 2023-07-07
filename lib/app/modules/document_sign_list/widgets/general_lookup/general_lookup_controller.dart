@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:htds_mobile/app/core/values/app_values.dart';
+import 'package:htds_mobile/app/core/widget/dropdown_multiple.dart';
 import 'package:htds_mobile/app/modules/document_sign_list/widgets/detail_popup/detail_popup.dart';
+import 'package:htds_mobile/app/modules/document_sign_list/widgets/filter/filter_view.dart';
 
 import '../../../../core/model/document.dart';
 import '../../../../core/widget/datatable.dart';
@@ -40,7 +42,7 @@ class GeneralLookupController extends BaseController {
         width: 30,
         renderer: _renderFixedRightColumn),
   ];
-
+  final Rxn<Map<String, dynamic>> filterData = Rxn<Map<String, dynamic>>();
   @override
   void onInit() {
     super.onInit();
@@ -90,7 +92,6 @@ class GeneralLookupController extends BaseController {
   Widget _renderFixedLeftColumn(data, index) {
     return GestureDetector(
       onTap: () {
-        print(data.toString());
         listDocument[index].status = 0;
         listDocument.refresh();
       },
@@ -109,9 +110,7 @@ class GeneralLookupController extends BaseController {
         print(data.toString());
         listDocument[index].status = 1;
         listDocument.refresh();
-        Get.dialog(
-            DetailPopup(data: data),
-            barrierDismissible: false);
+        Get.dialog(DetailPopup(data: data), barrierDismissible: false);
       },
       child: Container(
         width: 30,
@@ -124,5 +123,50 @@ class GeneralLookupController extends BaseController {
         child: SvgPicture.asset('images/eye.svg'),
       ),
     );
+  }
+
+  void openFilterPopup() {
+    Get.dialog(DocumentSignListFilter(
+      onChange: (value) {
+        print(value.toString());
+        filterData(value);
+      },
+      selectedItem: filterData.value,
+    ));
+  }
+
+  get filterCount {
+    int result = 0;
+    if (filterData.value != null) {
+      filterData.value!.forEach((key, value) {
+        if (value != null) {
+          if (value is Document) {
+            result ++;
+          } else if (value.length > 0) {
+            result += (value.length as int);
+          }
+      }
+      });
+    }
+    return result;
+  }
+
+  void removeItem(SearchItem data) {
+    final temp = filterData.value;
+    switch (data.type) {
+      case 'status':
+        temp!["status"] = null;
+        break;
+      default:
+        temp![data.type!] = (temp![data.type!] as List<SearchItem>).where((element) => element.value != data.value).toList();
+        break;
+    }
+    filterData(temp);
+    filterData.refresh();
+  }
+
+  void clearFilter() {
+    filterData.value = null;
+    filterData.refresh();
   }
 }

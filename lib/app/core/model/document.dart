@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:htds_mobile/app/core/widget/search.dart';
+import 'package:htds_mobile/app/core/widget/dropdown_multiple.dart';
 
 Document documentFromJson(String str) => Document.fromJson(json.decode(str));
 

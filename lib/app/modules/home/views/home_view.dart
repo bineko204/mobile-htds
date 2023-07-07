@@ -44,7 +44,7 @@ class HomeView extends BaseView<HomeController> {
                   horizontal: AppValues.smallPadding),
               child: GestureDetector(
                 onTap: (){
-                  Get.toNamed(Routes.DOCUMENT_SIGN_LIST, parameters: {"type": index.toString()} );
+                  Get.toNamed(Routes.DOCUMENT_SIGN_LIST );
                 },
                 child: Row(
                   children: [

@@ -1,6 +1,5 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class SearchItem {
   String? label;
@@ -14,7 +13,8 @@ class CustomDropdownSearch<T extends SearchItem> extends StatefulWidget {
   final List<T> items;
   final Function? onChange;
   final List<T>? selectedItem;
-  const CustomDropdownSearch({Key? key, required this.items, this.onChange, this.selectedItem})
+  final String? label;
+  const CustomDropdownSearch({Key? key, required this.items, this.onChange, this.selectedItem, this.label})
       : super(key: key);
 
   @override
@@ -24,16 +24,6 @@ class CustomDropdownSearch<T extends SearchItem> extends StatefulWidget {
 
 class _CustomDropdownSearchState<T extends SearchItem>
     extends State<CustomDropdownSearch<T>> {
-  List<T> selectedItem = [];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    setState(() {
-      selectedItem = widget.selectedItem ?? [];
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,26 +76,18 @@ class _CustomDropdownSearchState<T extends SearchItem>
         },
       ),
       onChanged: (List<T> values) {
-        setState(() {
-          selectedItem = values;
-        });
         if (widget.onChange != null) {
           widget.onChange!(values);
         }
       },
-      selectedItems: selectedItem,
+      selectedItems: widget.selectedItem ?? [],
       dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(
             contentPadding: const EdgeInsets.only(left: 12, top: 12),
-            prefixIcon: selectedItem.isNotEmpty
-                ? null
-                : const Icon(
-                    Icons.search,
-                    size: 30,
-                  ),
-            hintText: "Tìm kiếm",
+            labelText: widget.label,
+            labelStyle: TextStyle(fontSize: 12),
             isDense: true,
-            hintStyle: const TextStyle(fontSize: 14),
+            hintStyle: const TextStyle(fontSize: 12),
             border: const OutlineInputBorder()),
       ),
     );

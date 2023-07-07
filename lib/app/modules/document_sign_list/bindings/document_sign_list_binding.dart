@@ -10,7 +10,7 @@ class DocumentSignListBinding extends Bindings {
       () => DocumentSignListController(),
     );
     Get.lazyPut<GeneralLookupController>(
-          () => GeneralLookupController(),
+          () => GeneralLookupController()
     );
   }
 }
