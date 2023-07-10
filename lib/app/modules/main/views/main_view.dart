@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:htds_mobile/app/modules/main/views/drawer.dart';
 
 import '../../../core/widget/custom_app_bar.dart';
 import '/app/core/base/base_view.dart';
@@ -30,24 +31,7 @@ class MainView extends BaseView<MainController> {
   @override
   Widget? drawer() {
     // TODO: implement drawer
-    return Drawer(
-      width: Get.width * 0.8,
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue,
-            ),
-            child: Text('Drawer Header'),
-          ),
-          ListTile(
-            title: const Text('Home'),
-            onTap: () {},
-          ),
-        ],
-      ),
-    );
+    return const CustomDrawer();
   }
 
   @override

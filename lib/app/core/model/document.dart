@@ -17,7 +17,7 @@ class Document extends SearchItem {
   @override
   String? label;
   @override
-  int? value;
+  dynamic? value;
   @override
   String? type;
 

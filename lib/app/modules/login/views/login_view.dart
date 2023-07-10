@@ -29,8 +29,8 @@ class LoginView extends BaseView<LoginController> {
       ),
       Container(
         padding: const EdgeInsets.symmetric(horizontal: AppValues.largePadding),
-        child: Column(
-          children: const [
+        child: const Column(
+          children: [
             Text('Đăng nhập', style: extraBigTitleStyle),
             Padding(
               padding: EdgeInsets.symmetric(vertical: AppValues.largePadding),
@@ -92,6 +92,7 @@ class LoginView extends BaseView<LoginController> {
                       minimumSize: const Size.fromHeight(48),
                     ),
                     onPressed: () {
+                      print(controller.formKey.currentState!.value?.toString());
                       Get.offNamed(Routes.MAIN);
                     },
                     child: const Text(
@@ -101,7 +102,7 @@ class LoginView extends BaseView<LoginController> {
                 const SizedBox(
                   height: AppValues.largePadding,
                 ),
-                Row(children: const [
+                const Row(children: [
                   Expanded(
                       child: Divider(
                     thickness: 2,

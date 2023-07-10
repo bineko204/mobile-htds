@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class SearchItem {
   String? label;
   String? type;
-  int? value;
+  dynamic? value;
 
   SearchItem({this.label, this.value, this.type});
 }
