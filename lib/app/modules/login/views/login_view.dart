@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:htds_mobile/app/core/widget/form/custom_checkbox.dart';
 import 'package:htds_mobile/app/core/widget/form/custom_text_field.dart';
 import 'package:htds_mobile/app/routes/app_pages.dart';
+import 'package:local_auth/local_auth.dart';
 import '../../../core/values/app_values.dart';
 import '../controllers/login_controller.dart';
 import '/app/core/base/base_view.dart';
@@ -62,7 +63,8 @@ class LoginView extends BaseView<LoginController> {
                     label: "Tên người dùng",
                     formControlName: 'username',
                     validators: [
-                      FormBuilderValidators.required(errorText: "Tên người dùng không được để trống"),
+                      FormBuilderValidators.required(
+                          errorText: "Tên người dùng không được để trống"),
                     ],
                   ),
                 ),
@@ -104,8 +106,12 @@ class LoginView extends BaseView<LoginController> {
                       minimumSize: const Size.fromHeight(48),
                     ),
                     onPressed: () {
-                      if (controller.formKey.currentState?.saveAndValidate() ?? false) {
-                        controller.login();
+                      if (controller.formKey.currentState?.saveAndValidate() ??
+                          false) {
+                        controller.login(
+                            controller.formKey.currentState!.value["username"],
+                            controller.formKey.currentState!.value["password"],
+                            controller.formKey.currentState!.value["remember"]);
                       }
                     },
                     child: const Text(
@@ -115,71 +121,114 @@ class LoginView extends BaseView<LoginController> {
                 const SizedBox(
                   height: AppValues.largePadding,
                 ),
-                const Row(children: [
-                  Expanded(
-                      child: Divider(
-                    thickness: 2,
-                  )),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: AppValues.smallPadding),
-                    child: Text(
-                      "Hoặc đăng nhập bằng",
-                      style: TextStyle(fontSize: 12),
-                    ),
-                  ),
-                  Expanded(
-                      child: Divider(
-                    thickness: 2,
-                  )),
-                ]),
-                const SizedBox(height: AppValues.largePadding,),
-                Row(
-                  children: [
-                    Flexible(
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: const Color(0xffFEEBEF),
-                            minimumSize: const Size.fromHeight(48),
+                Obx(
+                  () => Visibility(
+                      visible: controller.availableBiometrics.isNotEmpty,
+                      child: Column(
+                        children: [
+                          const Row(children: [
+                            Expanded(
+                                child: Divider(
+                              thickness: 2,
+                            )),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: AppValues.smallPadding),
+                              child: Text(
+                                "Hoặc đăng nhập bằng",
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ),
+                            Expanded(
+                                child: Divider(
+                              thickness: 2,
+                            )),
+                          ]),
+                          const SizedBox(
+                            height: AppValues.largePadding,
                           ),
-                          onPressed: () {},
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          Row(
                             children: [
-                              SizedBox(width: 24, height: 24, child: Image.asset('images/finger-print.png')),
-                              const SizedBox(width: AppValues.smallPadding),
-                              const Text(
-                                "Vân tay",
-                                style: TextStyle(color: Color(0xffEF0032), fontSize: 10),
+                              Visibility(
+                                visible: controller.availableBiometrics
+                                    .contains(BiometricType.fingerprint),
+                                child: Flexible(
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: const Color(0xffFEEBEF),
+                                        minimumSize: const Size.fromHeight(48),
+                                      ),
+                                      onPressed: () {},
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                              width: 24,
+                                              height: 24,
+                                              child: Image.asset(
+                                                  'images/finger-print.png')),
+                                          const SizedBox(
+                                              width: AppValues.smallPadding),
+                                          const Text(
+                                            "Vân tay",
+                                            style: TextStyle(
+                                                color: Color(0xffEF0032),
+                                                fontSize: 10),
+                                          ),
+                                        ],
+                                      )),
+                                ),
+                              ),
+                              Visibility(
+                                  visible: controller.availableBiometrics
+                                          .contains(BiometricType.face) &&
+                                      controller.availableBiometrics
+                                          .contains(BiometricType.fingerprint),
+                                  child: const SizedBox(
+                                    width: AppValues.largePadding,
+                                  )),
+                              Visibility(
+                                visible: controller.availableBiometrics
+                                    .contains(BiometricType.face),
+                                child: Flexible(
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: const Color(0xffFEEBEF),
+                                        minimumSize: const Size.fromHeight(48),
+                                      ),
+                                      onPressed: () {
+                                        controller.bioLogin();
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                              width: 24,
+                                              height: 24,
+                                              child: Image.asset(
+                                                  'images/face-id.png')),
+                                          const SizedBox(
+                                              width: AppValues.smallPadding),
+                                          const Text(
+                                            "Face ID",
+                                            style: TextStyle(
+                                                color: Color(0xffEF0032),
+                                                fontSize: 10),
+                                          ),
+                                        ],
+                                      )),
+                                ),
                               ),
                             ],
-                          )),
-                    ),
-                    const SizedBox(width: AppValues.largePadding,),
-                    Flexible(
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: const Color(0xffFEEBEF),
-                            minimumSize: const Size.fromHeight(48),
                           ),
-                          onPressed: () {
-                            controller.bioLogin();
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(width: 24, height: 24, child: Image.asset('images/face-id.png')),
-                              const SizedBox(width: AppValues.smallPadding),
-                              const Text(
-                                "Face ID",
-                                style: TextStyle(color: Color(0xffEF0032), fontSize: 10),
-                              ),
-                            ],
-                          )),
-                    ),
-                  ],
+                          const SizedBox(
+                            height: AppValues.largePadding,
+                          )
+                        ],
+                      )),
                 ),
-                const SizedBox(height: AppValues.largePadding,)
               ],
             )),
       )

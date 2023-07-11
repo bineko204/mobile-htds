@@ -14,7 +14,7 @@ class CustomDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           SizedBox(
-            height: 88,
+            height: 113,
             child: DrawerHeader(
               decoration: BoxDecoration(
               ),

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -9,15 +8,30 @@ import '../../../routes/app_pages.dart';
 import '/app/core/base/base_controller.dart';
 
 class LoginController extends BaseController {
-  final count = 0.obs;
   final formKey = GlobalKey<FormBuilderState>();
-  void increment() => count.value++;
   final LocalAuthentication _localAuthentication = LocalAuthentication();
+  final RxList<BiometricType> availableBiometrics = RxList.of([]);
+  @override
+  void onInit() {
+    super.onInit();
+    checkDeviceBio();
+  }
 
-  void login() {
-    final String username = formKey.currentState!.value["username"];
-    final String password = formKey.currentState!.value["password"];
-    final remember = formKey.currentState!.value["remember"];
+  checkDeviceBio() async {
+    bool isBiometricSupported = await _localAuthentication.isDeviceSupported();
+    if (isBiometricSupported) {
+      final List<BiometricType> available =
+      await _localAuthentication.getAvailableBiometrics();
+      if (available.isNotEmpty) {
+        availableBiometrics(available);
+        availableBiometrics.refresh();
+      }
+    }
+
+
+  }
+
+  void login(String username, String password, bool? remember) {
     if (username == "admin" && password == "admin") {
       Get.offNamed(Routes.MAIN);
     } else {
@@ -33,7 +47,13 @@ class LoginController extends BaseController {
   }
 
   void bioLogin() async {
-    bool isBiometricSupported = await _localAuthentication.isDeviceSupported();
-    print(isBiometricSupported.toString());
+    if (availableBiometrics.isNotEmpty) {
+      final bool didAuthenticate = await _localAuthentication.authenticate(
+          localizedReason: 'Please authenticate to show account balance',
+          options: const AuthenticationOptions(biometricOnly: true));
+      if (didAuthenticate) {
+        login("admin", "admin", true);
+      }
+    }
   }
 }
