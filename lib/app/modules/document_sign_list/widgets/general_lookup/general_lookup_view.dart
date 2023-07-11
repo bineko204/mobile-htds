@@ -126,6 +126,9 @@ class GeneralLookupView extends BaseView<GeneralLookupController> {
                         .map((e) => e.toJson())
                         .toList(),
                     headers: controller.headers,
+                    rowPress: (data) {
+                      print(data.toString());
+                    },
                   ),
                 ),
               ),
