@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:htds_mobile/app/core/widget/form/custom_checkbox.dart';
 import 'package:htds_mobile/app/core/widget/form/custom_text_field.dart';
@@ -48,13 +49,21 @@ class LoginView extends BaseView<LoginController> {
         padding: const EdgeInsets.symmetric(horizontal: AppValues.largePadding),
         child: FormBuilder(
             key: controller.formKey,
+            onChanged: () {
+              controller.formKey.currentState!.save();
+              debugPrint(controller.formKey.currentState!.value.toString());
+            },
+            // autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(top: AppValues.largePadding),
+                Padding(
+                  padding: const EdgeInsets.only(top: AppValues.largePadding),
                   child: CustomTextField(
                     label: "Tên người dùng",
                     formControlName: 'username',
+                    validators: [
+                      FormBuilderValidators.required(errorText: "Tên người dùng không được để trống"),
+                    ],
                   ),
                 ),
                 const Padding(
@@ -63,6 +72,9 @@ class LoginView extends BaseView<LoginController> {
                     label: "Mật khẩu",
                     formControlName: 'password',
                     type: "password",
+                    // validators: [
+                    //   FormBuilderValidators.required(errorText: "Mật khẩu không được để trống"),
+                    // ],
                   ),
                 ),
                 Row(
@@ -92,8 +104,9 @@ class LoginView extends BaseView<LoginController> {
                       minimumSize: const Size.fromHeight(48),
                     ),
                     onPressed: () {
-                      print(controller.formKey.currentState!.value?.toString());
-                      Get.offNamed(Routes.MAIN);
+                      if (controller.formKey.currentState?.saveAndValidate() ?? false) {
+                        controller.login();
+                      }
                     },
                     child: const Text(
                       "Đăng nhập",
@@ -149,7 +162,9 @@ class LoginView extends BaseView<LoginController> {
                             primary: const Color(0xffFEEBEF),
                             minimumSize: const Size.fromHeight(48),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            controller.bioLogin();
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

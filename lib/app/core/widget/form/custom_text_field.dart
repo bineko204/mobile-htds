@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:htds_mobile/app/core/values/app_values.dart';
 
+import 'package:form_builder_validators/form_builder_validators.dart';
 
 class CustomTextField extends StatefulWidget {
   final String? label;
@@ -10,7 +11,7 @@ class CustomTextField extends StatefulWidget {
   final String? type;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-
+  final List<String? Function(String?)>? validators;
   const CustomTextField(
       {Key? key,
       this.label,
@@ -18,6 +19,7 @@ class CustomTextField extends StatefulWidget {
       this.onChange,
       this.prefixIcon,
       this.suffixIcon,
+      this.validators,
       this.type})
       : super(key: key);
 
@@ -51,6 +53,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         FormBuilderTextField(
           obscureText: !_isPasswordVisible && widget.type == "password",
           name: widget.formControlName,
+          validator: FormBuilderValidators.compose(widget.validators ?? []),
           decoration: InputDecoration(
             prefixIcon: widget.prefixIcon,
             suffixIcon: widget.type == "password" ? IconButton(
