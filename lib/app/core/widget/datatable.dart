@@ -24,8 +24,9 @@ class MyDataTable extends StatefulWidget {
   final List<DataTableHeader> headers;
   final List<Map<String, dynamic>> columns;
   final int displayColumnNumber;
+  final Function? rowPress;
 
-  const MyDataTable({super.key, required this.headers, required this.columns, this.displayColumnNumber = 4});
+  const MyDataTable({super.key, required this.headers, required this.columns, this.displayColumnNumber = 4, this.rowPress});
 
   @override
   State<MyDataTable> createState() => _MyDataTableState();
@@ -129,6 +130,7 @@ class _MyDataTableState extends State<MyDataTable> {
                 child: DataTable(
                   horizontalMargin: 0,
                   headingRowHeight: 45,
+                  showCheckboxColumn: false,
                   // decoration: BoxDecoration(
                   //   borderRadius: BorderRadius.circular(5),
                   //   // border: Border.all(color: Colors.grey),
@@ -153,6 +155,11 @@ class _MyDataTableState extends State<MyDataTable> {
                     (col) {
                       final index = widget.columns.indexOf(col);
                       return DataRow(
+                        onSelectChanged: (newValue){
+                          if (widget.rowPress != null) {
+                            widget.rowPress!(col);
+                          }
+                        },
                           cells: centerHeader
                               .map((header) => DataCell(header.renderer != null
                                   ? header.renderer!(col, index)
