@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:htds_mobile/app/data/local/preference/preference_manager.dart';
+import 'package:htds_mobile/app/modules/document_sign_list/widgets/cancel_popup/cancel_popup.dart';
 
 import '../../../../core/model/document.dart';
 import '../../../../core/values/app_values.dart';
@@ -121,7 +122,9 @@ class _DetailPopupState extends State<DetailPopup> {
     return [
       _signButton(),
       ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Get.dialog(CancelPopup(), barrierDismissible: false);
+          },
           style: ElevatedButton.styleFrom(
             minimumSize: Size.zero,
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 6),

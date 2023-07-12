@@ -11,6 +11,7 @@ class CustomTextField extends StatefulWidget {
   final String? type;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final int? maxLines;
   final List<String? Function(String?)>? validators;
   const CustomTextField(
       {Key? key,
@@ -20,6 +21,7 @@ class CustomTextField extends StatefulWidget {
       this.prefixIcon,
       this.suffixIcon,
       this.validators,
+      this.maxLines = 1,
       this.type})
       : super(key: key);
 
@@ -51,9 +53,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
               )
             : Container(),
         FormBuilderTextField(
+          maxLines: widget.maxLines,
           obscureText: !_isPasswordVisible && widget.type == "password",
           name: widget.formControlName,
           validator: FormBuilderValidators.compose(widget.validators ?? []),
+          style: TextStyle(fontSize: 12),
           decoration: InputDecoration(
             prefixIcon: widget.prefixIcon,
             suffixIcon: widget.type == "password" ? IconButton(
@@ -63,7 +67,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               onPressed: _togglePasswordVisibility,
             ) : widget.suffixIcon,
             contentPadding:
-                const EdgeInsets.symmetric(horizontal: AppValues.smallPadding),
+                const EdgeInsets.symmetric(horizontal: AppValues.smallPadding, vertical: AppValues.smallPadding),
             border: OutlineInputBorder(
               borderSide: const BorderSide(width: 1, color: Colors.black),
               borderRadius: BorderRadius.circular(AppValues.smallElevation),

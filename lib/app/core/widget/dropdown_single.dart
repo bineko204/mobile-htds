@@ -26,46 +26,26 @@ class _CustomDropdownSingleState<T extends SearchItem>
     return DropdownSearch<T>(
       key: popupCustomValidationKey,
       compareFn: (i, s) => i.value == s.value,
+
       itemAsString: (item) {
         return item.label ?? item.toString();
       },
       clearButtonProps: const ClearButtonProps(
-        isVisible: false,
+        isVisible: true,
       ),
       dropdownButtonProps: const DropdownButtonProps(isVisible: true),
       items: widget.items,
-      popupProps: PopupPropsMultiSelection.menu(
-        showSearchBox: false,
-        showSelectedItems: true,
-        validationWidgetBuilder: (ctx, selectedItems) {
-          return Padding(
-            padding: const EdgeInsets.all(8),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: ElevatedButton(
-                onPressed: () {
-                  popupCustomValidationKey.currentState?.popupOnValidate();
-                },
-                child: const Text("Tìm kiếm"),
-              ),
-            ),
-          );
-        },
-        searchFieldProps: const TextFieldProps(
-            decoration: InputDecoration(
-                isDense: true,
-                border: OutlineInputBorder(),
-                hintText: "Nhập tên")),
+      popupProps: PopupProps.menu(
         itemBuilder: (ctx, item, isSelected) {
           // const title = getProperty(item, name)
           return ListTile(
             selected: isSelected,
-            title: Text(item.label ?? item.toString()),
+            title: Text(item.label ?? item.toString(), style: TextStyle(fontSize: 12),),
             dense: true,
-            trailing: Text(
-              item.type ?? "",
-              style: const TextStyle(fontSize: 12),
-            ),
+            // trailing: Text(
+            //   item.type ?? "",
+            //   style: const TextStyle(fontSize: 12),
+            // ),
           );
         },
       ),
@@ -75,7 +55,7 @@ class _CustomDropdownSingleState<T extends SearchItem>
         }
       },
       selectedItem: widget.selectedItem,
-      dropdownDecoratorProps: DropDownDecoratorProps(
+      dropdownDecoratorProps: DropDownDecoratorProps(baseStyle: TextStyle(fontSize: 12),
         dropdownSearchDecoration: InputDecoration(
             contentPadding: const EdgeInsets.only(left: 12, top: 12),
             labelText: widget.label,

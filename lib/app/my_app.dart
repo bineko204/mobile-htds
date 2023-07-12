@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
           textTheme: const TextTheme(
             button: TextStyle(
               color: Colors.white,
-              fontSize: 14.0,
+              fontSize: 12.0,
             ),
           ),
           fontFamily: 'Roboto',
