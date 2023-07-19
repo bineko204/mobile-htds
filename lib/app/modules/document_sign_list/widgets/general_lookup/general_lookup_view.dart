@@ -6,6 +6,7 @@ import 'package:htds_mobile/app/core/model/document.dart';
 import 'package:htds_mobile/app/core/widget/datatable.dart';
 
 import '../../../../core/base/base_view.dart';
+import '../../../../core/model/base_search_item.dart';
 import '../../../../core/values/app_values.dart';
 import '../../../../core/widget/dropdown_multiple.dart';
 import '../../../../routes/app_pages.dart';
@@ -87,7 +88,7 @@ class GeneralLookupView extends BaseView<GeneralLookupController> {
               const SizedBox(width: AppValues.smallPadding),
               InkWell(
                 onTap: () {
-                  if (context.orientation == Orientation.landscape) {
+                  if (Get.currentRoute == Routes.DOCUMENT_SIGN_LIST_FULLSCREEN) {
                     Get.back();
                   } else {
                     Get.toNamed(Routes.DOCUMENT_SIGN_LIST_FULLSCREEN);

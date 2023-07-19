@@ -9,14 +9,14 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      width: Get.width * 0.8,
+      width: 400,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
           SizedBox(
             height: 113,
             child: DrawerHeader(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -24,7 +24,7 @@ class CustomDrawer extends StatelessWidget {
                   Image.asset('images/logo_login.png', height: 24,),
                   IconButton(onPressed: (){
                     Get.back();
-                  }, icon: Icon(Icons.clear, size: 24,))
+                  }, icon: const Icon(Icons.clear, size: 24,))
                 ],
               )
             ),

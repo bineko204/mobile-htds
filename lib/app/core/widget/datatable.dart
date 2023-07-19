@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:htds_mobile/app/core/values/app_values.dart';
 
-import '../../routes/app_pages.dart';
 
 class DataTableHeader {
   final String? title;
@@ -45,10 +44,10 @@ class _MyDataTableState extends State<MyDataTable> {
   void initState() {
     super.initState();
     // get value from main list
-    _initHeader();
+    // _initHeader();
   }
 
-  _initHeader() {
+  _initHeader(Orientation orient) {
     centerHeader = List.from(widget.headers);
     if (centerHeader.isNotEmpty) {
       final fixedLeft =
@@ -63,7 +62,7 @@ class _MyDataTableState extends State<MyDataTable> {
         final fixedRightIndex = centerHeader.indexOf(fixedRight);
         fixedRightHeader = centerHeader.removeAt(fixedRightIndex);
       }
-      centerColumnWidth = _calculateCenterColumnWidth();
+      centerColumnWidth = _calculateCenterColumnWidth(orient);
     }
   }
 
@@ -74,7 +73,8 @@ class _MyDataTableState extends State<MyDataTable> {
     }
     return OrientationBuilder(
       builder: (context, orientation) {
-        _initHeader();
+        final orient = MediaQuery.of(context).orientation;
+        _initHeader(orient);
         return Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -229,8 +229,8 @@ class _MyDataTableState extends State<MyDataTable> {
     );
   }
 
-  double _calculateCenterColumnWidth() {
-    final isFullScreen = Get.currentRoute == Routes.DOCUMENT_SIGN_LIST_FULLSCREEN;
+  double _calculateCenterColumnWidth(Orientation orient) {
+    final isLandscape = orient == Orientation.landscape;
     final fixedLeftWidth = fixedLeftHeader?.width ?? 0;
     final fixedRightWidth = fixedRightHeader?.width ?? 0;
     double result = 100;
@@ -245,7 +245,7 @@ class _MyDataTableState extends State<MyDataTable> {
                 ? (fixedRightWidth + 20)
                 : 0) // fixed right + padding header
         ) /
-        (isFullScreen ? centerHeader.length : widget.displayColumnNumber);
+        (isLandscape ? centerHeader.length : widget.displayColumnNumber);
     return result;
   }
 }

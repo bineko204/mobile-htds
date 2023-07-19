@@ -1,6 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'dropdown_multiple.dart';
+import '../model/base_search_item.dart';
 
 
 class CustomDropdownSingle<T extends SearchItem> extends StatefulWidget {
@@ -36,6 +36,8 @@ class _CustomDropdownSingleState<T extends SearchItem>
       dropdownButtonProps: const DropdownButtonProps(isVisible: true),
       items: widget.items,
       popupProps: PopupProps.menu(
+        fit: FlexFit.loose,
+        showSelectedItems: true,
         itemBuilder: (ctx, item, isSelected) {
           // const title = getProperty(item, name)
           return ListTile(

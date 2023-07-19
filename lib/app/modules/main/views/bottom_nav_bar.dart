@@ -69,7 +69,7 @@ class BottomNavBar extends StatelessWidget {
       const BottomNavItem(
           navTitle: "Báo cáo",
           iconSvgName: "report_bottombar.svg",
-          menuCode: MenuCode.SETTINGS)
+          menuCode: MenuCode.REPORT)
     ];
   }
 }

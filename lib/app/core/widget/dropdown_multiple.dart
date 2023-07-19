@@ -1,13 +1,8 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
-class SearchItem {
-  String? label;
-  String? type;
-  dynamic? value;
+import '../model/base_search_item.dart';
 
-  SearchItem({this.label, this.value, this.type});
-}
 
 class CustomDropdownSearch<T extends SearchItem> extends StatefulWidget {
   final List<T> items;

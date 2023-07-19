@@ -11,6 +11,7 @@ class CustomTextField extends StatefulWidget {
   final String? type;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final String? hintText;
   final int? maxLines;
   final List<String? Function(String?)>? validators;
   const CustomTextField(
@@ -21,6 +22,7 @@ class CustomTextField extends StatefulWidget {
       this.prefixIcon,
       this.suffixIcon,
       this.validators,
+      this.hintText,
       this.maxLines = 1,
       this.type})
       : super(key: key);
@@ -59,6 +61,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           validator: FormBuilderValidators.compose(widget.validators ?? []),
           style: TextStyle(fontSize: 12),
           decoration: InputDecoration(
+            hintText: widget.hintText,
             prefixIcon: widget.prefixIcon,
             suffixIcon: widget.type == "password" ? IconButton(
               icon: Icon(

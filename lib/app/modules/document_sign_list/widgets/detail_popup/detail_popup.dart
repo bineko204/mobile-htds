@@ -82,8 +82,11 @@ class _DetailPopupState extends State<DetailPopup> {
   }
 
   Widget _dialogContent() {
-    return SizedBox(
+    return Container(
       width: Get.width - (AppValues.largePadding * 2),
+      constraints: const BoxConstraints(
+        maxWidth: 500
+      ),
       child: ListView(
         shrinkWrap: true,
         children: [
@@ -108,7 +111,7 @@ class _DetailPopupState extends State<DetailPopup> {
             label,
             style: const TextStyle(fontSize: 14),
           ),
-          Text(" : ", style: const TextStyle(fontSize: 14),),
+          const Text(" : ", style: TextStyle(fontSize: 14),),
           Text(
             data,
             style: const TextStyle(fontSize: 14),

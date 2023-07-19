@@ -1,16 +1,13 @@
-import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:htds_mobile/app/core/widget/dropdown_single.dart';
-import 'package:htds_mobile/app/data/local/preference/preference_manager.dart';
 
-import '../../../../core/model/document.dart';
+import '../../../../core/model/base_search_item.dart';
 import '../../../../core/values/app_values.dart';
-import '../../../../core/widget/dropdown_multiple.dart';
 import '../../../../core/widget/form/custom_text_field.dart';
 import '../view_report_popup/view_report_popup.dart';
 
@@ -21,7 +18,7 @@ class CancelPopup extends StatefulWidget {
 
 class _CancelPopupState extends State<CancelPopup> {
   final formKey = GlobalKey<FormBuilderState>();
-  File? selectedFile;
+  PlatformFile? selectedFile;
   final List<SearchItem> listReason = [
     SearchItem(value: 1, label: "Lý do 1"),
     SearchItem(value: 2, label: "Lý do 2"),
@@ -31,14 +28,23 @@ class _CancelPopupState extends State<CancelPopup> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      insetPadding: const EdgeInsets.all(AppValues.largePadding),
-      title: _dialogTitle(),
-      content: _dialogContent(),
-      actions: _listAction(),
-      actionsAlignment: MainAxisAlignment.start,
-      titlePadding: EdgeInsets.zero,
-      contentPadding: const EdgeInsets.all(AppValues.smallPadding),
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: AlertDialog(
+        insetPadding: const EdgeInsets.all(AppValues.largePadding),
+        title: _dialogTitle(),
+        content: _dialogContent(),
+        actions: _listAction(),
+        actionsAlignment: MainAxisAlignment.start,
+        titlePadding: EdgeInsets.zero,
+        contentPadding: const EdgeInsets.all(AppValues.smallPadding),
+      ),
     );
   }
 
@@ -81,8 +87,11 @@ class _CancelPopupState extends State<CancelPopup> {
         formKey.currentState!.save();
         debugPrint(formKey.currentState!.value.toString());
       },
-      child: SizedBox(
+      child: Container(
         width: Get.width - (AppValues.largePadding * 2),
+        constraints: const BoxConstraints(
+            maxWidth: 500
+        ),
         child: ListView(
           shrinkWrap: true,
           children: [
@@ -147,13 +156,14 @@ class _CancelPopupState extends State<CancelPopup> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(AppValues.radius_6),
                         border:
-                            Border.all(color: Colors.grey.withOpacity(0.3))),
+                        Border.all(color: Colors.grey.withOpacity(0.3))),
                     child: InkWell(
                       onTap: () async {
-                        FilePickerResult? result = await FilePicker.platform.pickFiles();
+                        FilePickerResult? result = await FilePicker.platform
+                            .pickFiles();
                         if (result != null) {
                           setState(() {
-                            selectedFile = File(result.files.single.path!);
+                            selectedFile = result.files.single;
                           });
                         } else {
                           // User canceled the picker
@@ -161,22 +171,35 @@ class _CancelPopupState extends State<CancelPopup> {
                       },
                       child: Row(
                         children: [
-                          const Icon(
-                            Icons.link_rounded,
-                            color: Colors.grey,
-                            size: 30,
+                          SvgPicture.asset(
+                              "images/attach_file.svg"
                           ),
-                          const Expanded(
-                            child: Text(
-                              "Upload file",
-                              style: TextStyle(color: Colors.grey, fontSize: 12),
-                            ),
+                          Expanded(
+                              child: selectedFile != null ? Text(
+                                selectedFile!.name!,
+                                style: const TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: 12,
+                                  overflow: TextOverflow.ellipsis,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ) : const Text("Attach file",
+                                style: TextStyle(
+                                    color: Colors.grey, fontSize: 12),
+                              ),
                           ),
-                          InkWell(onTap: () {}, child: const Icon(
-                            Icons.clear,
-                            color: Colors.grey,
-                            size: 20,
-                          ),)
+                          Visibility(
+                            visible: selectedFile != null,
+                            child: InkWell(onTap: () {
+                              setState(() {
+                                selectedFile = null;
+                              });
+                            }, child: const Icon(
+                              Icons.clear,
+                              color: Colors.grey,
+                              size: 20,
+                            ),),
+                          )
                         ],
                       ),
                     ),

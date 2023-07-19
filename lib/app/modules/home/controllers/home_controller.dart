@@ -1,7 +1,7 @@
 
 import 'package:get/get.dart';
 
-import '../../../core/widget/dropdown_multiple.dart';
+import '../../../core/model/base_search_item.dart';
 import '../../../routes/app_pages.dart';
 import '/app/core/base/base_controller.dart';
 

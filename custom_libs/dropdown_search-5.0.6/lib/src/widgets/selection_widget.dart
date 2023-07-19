@@ -290,7 +290,7 @@ class SelectionWidgetState<T> extends State<SelectionWidget<T>> {
 
   ///Function that filter item (online and offline) base on user filter
   ///[filter] is the filter keyword
-  ///[isFirstLoad] true if it's the first time we load data from online, false other wises
+  ///[isFirstLoad] true if it's the first time we load data from online, false report wises
   Future<void> _manageItemsByFilter(String filter, {bool isFirstLoad = false}) async {
     _loadingNotifier.value = true;
 
@@ -419,7 +419,7 @@ class SelectionWidgetState<T> extends State<SelectionWidget<T>> {
       widget.popupProps.disabledItemFn != null && (widget.popupProps.disabledItemFn!(item)) == true;
 
   /// selected item will be highlighted only when [widget.showSelectedItems] is true,
-  /// if our object is String [widget.compareFn] is not required , other wises it's required
+  /// if our object is String [widget.compareFn] is not required , report wises it's required
   bool _isSelectedItem(T item) {
     return _itemIndexInList(_selectedItems, item) > -1;
   }

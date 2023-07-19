@@ -6,6 +6,7 @@ import 'package:htds_mobile/app/core/widget/dropdown_multiple.dart';
 import 'package:htds_mobile/app/modules/document_sign_list/widgets/detail_popup/detail_popup.dart';
 import 'package:htds_mobile/app/modules/document_sign_list/widgets/filter/filter_view.dart';
 
+import '../../../../core/model/base_search_item.dart';
 import '../../../../core/model/document.dart';
 import '../../../../core/widget/datatable.dart';
 import '/app/core/base/base_controller.dart';

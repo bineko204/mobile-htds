@@ -59,7 +59,7 @@ class NavigatorObserverWithOrientation extends NavigatorObserver {
         _setOrientation(ScreenOrientation.landscapeOnly);
         break;
       default:
-        _setOrientation(ScreenOrientation.portraitOnly);
+        _setOrientation(ScreenOrientation.rotating);
         break;
     }
   }

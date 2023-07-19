@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:htds_mobile/app/core/widget/dropdown_multiple.dart';
+import 'base_search_item.dart';
 
 Document documentFromJson(String str) => Document.fromJson(json.decode(str));
 
@@ -17,7 +17,7 @@ class Document extends SearchItem {
   @override
   String? label;
   @override
-  dynamic? value;
+  dynamic value;
   @override
   String? type;
 
@@ -30,12 +30,13 @@ class Document extends SearchItem {
     this.type,
   });
 
+  @override
   Document copyWith({
     String? name,
     String? partner,
     int? status,
     String? label,
-    int? value,
+    dynamic value,
     String? type,
   }) =>
       Document(
@@ -56,6 +57,7 @@ class Document extends SearchItem {
     type: json["type"],
   );
 
+  @override
   Map<String, dynamic> toJson() => {
     "name": name,
     "partner": partner,

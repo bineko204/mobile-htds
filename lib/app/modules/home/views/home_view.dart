@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:htds_mobile/app/routes/app_pages.dart';
 
+import '../../../core/model/base_search_item.dart';
 import '../../../core/widget/dropdown_multiple.dart';
 import '/app/core/base/base_view.dart';
 import '/app/core/values/app_values.dart';

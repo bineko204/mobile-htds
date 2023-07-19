@@ -116,7 +116,7 @@ class DropdownSearch<T> extends StatefulWidget {
   ///function that compares two object with the same type to detected if it's the selected item or not
   final DropdownSearchCompareFn<T>? compareFn;
 
-  /// Used to configure the auto validation of [FormField] and [Form] widgets.
+  /// Used to configure the auto validation of [FormField] and [Form] pages.
   final AutovalidateMode? autoValidateMode;
 
   /// An optional method to call with the final value when the form is saved via
@@ -777,7 +777,7 @@ class DropdownSearchState<T> extends State<DropdownSearch<T>> {
   ///close dropdownSearch popup if it's open
   void closeDropDownSearch() => _popupStateKey.currentState?.closePopup();
 
-  ///returns true if all popup's items are selected; other wise False
+  ///returns true if all popup's items are selected; report wise False
   bool get popupIsAllItemSelected => _popupStateKey.currentState?.isAllItemSelected ?? false;
 
   ///returns popup selected items

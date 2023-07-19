@@ -13,7 +13,8 @@ abstract class Routes {
   static const VIEW_PDF = _Paths.VIEW_PDF;
   static const FAVORITE = _Paths.FAVORITE;
   static const SETTINGS = _Paths.SETTINGS;
-  static const OTHER = _Paths.OTHER;
+  static const REPORT = _Paths.REPORT;
+  static const REPORT_DETAIL = _Paths.REPORT_DETAIL;
   static const PROJECT_DETAILS = _Paths.PROJECT_DETAILS;
 }
 
@@ -27,6 +28,7 @@ abstract class _Paths {
   static const VIEW_PDF = '/view-pdf';
   static const FAVORITE = '/favorite';
   static const SETTINGS = '/settings';
-  static const OTHER = '/other';
+  static const REPORT = '/report';
+  static const REPORT_DETAIL = '/report-detail';
   static const PROJECT_DETAILS = '/project-details';
 }

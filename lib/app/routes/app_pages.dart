@@ -3,10 +3,13 @@ import 'package:htds_mobile/app/modules/document_sign_list/bindings/document_sig
 import 'package:htds_mobile/app/modules/document_sign_list/views/document_sign_list_view.dart';
 import 'package:htds_mobile/app/modules/login/bindings/login_binding.dart';
 import 'package:htds_mobile/app/modules/login/views/login_view.dart';
+import 'package:htds_mobile/app/modules/report/bindings/report_binding.dart';
+import 'package:htds_mobile/app/modules/report/pages/report_detail/report_detail_binding.dart';
+import 'package:htds_mobile/app/modules/report/pages/report_detail/report_detail_view.dart';
+import 'package:htds_mobile/app/modules/report/views/report_view.dart';
 import 'package:htds_mobile/app/modules/reset_password/views/reset_password_view.dart';
 import 'package:htds_mobile/app/modules/view_pdf/bindings/view_pdf_binding.dart';
 
-import '../core/base/orientation_controller.dart';
 import '../modules/document_sign_list/views/document_sign_list_fullscreen_view.dart';
 import '../modules/reset_password/bindings/reset_password_binding.dart';
 import '../modules/view_pdf/views/view_pdf_view.dart';
@@ -16,8 +19,6 @@ import '/app/modules/home/bindings/home_binding.dart';
 import '/app/modules/home/views/home_view.dart';
 import '/app/modules/main/bindings/main_binding.dart';
 import '/app/modules/main/views/main_view.dart';
-import '/app/modules/other/bindings/other_binding.dart';
-import '/app/modules/other/views/other_view.dart';
 import '/app/modules/project_details/bindings/project_details_binding.dart';
 import '/app/modules/project_details/views/project_details_view.dart';
 import '/app/modules/settings/bindings/settings_binding.dart';
@@ -77,9 +78,14 @@ class AppPages {
       binding: SettingsBinding(),
     ),
     GetPage(
-      name: _Paths.OTHER,
-      page: () => OtherView(),
-      binding: OtherBinding(),
+      name: _Paths.REPORT,
+      page: () => ReportView(),
+      binding: ReportBinding(),
+    ),
+    GetPage(
+      name: _Paths.REPORT_DETAIL,
+      page: () => ReportDetailView(),
+      binding: ReportDetailBinding(),
     ),
     GetPage(
       name: _Paths.PROJECT_DETAILS,

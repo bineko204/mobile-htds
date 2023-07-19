@@ -54,8 +54,11 @@ class _ViewReportPopupState extends State<ViewReportPopup> {
   }
 
   Widget _dialogContent() {
-    return SizedBox(
+    return Container(
       width: Get.width - (AppValues.largePadding * 2),
+      constraints: const BoxConstraints(
+        maxWidth: 500
+      ),
       child: ListView(
         shrinkWrap: true,
         children: [
