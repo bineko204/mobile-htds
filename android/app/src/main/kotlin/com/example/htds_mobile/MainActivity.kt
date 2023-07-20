@@ -18,7 +18,7 @@ class MainActivity : FlutterFragmentActivity() {
     private val CHANNEL = "go.sign.sdk.chanel"
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        GoSignSDKSetup.initialize(application, "https://remotesigning.viettel.vn:8773", "Xác thực khuôn mặt")
+        GoSignSDKSetup.initialize(application, "https://remotesigning.viettel.vn:8773", "Xác thực")
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
             CHANNEL
