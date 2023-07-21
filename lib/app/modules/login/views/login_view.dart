@@ -123,7 +123,7 @@ class LoginView extends BaseView<LoginController> {
                 ),
                 Obx(
                   () => Visibility(
-                      visible: controller.availableBiometrics.isNotEmpty,
+                      visible: controller.availableBiometrics.isNotEmpty && controller.enableBioAuthentication.value,
                       child: Column(
                         children: [
                           const Row(children: [

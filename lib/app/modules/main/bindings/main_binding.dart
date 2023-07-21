@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:htds_mobile/app/modules/main/controllers/bottom_nav_controller.dart';
 import 'package:htds_mobile/app/modules/report/controllers/report_controller.dart';
 
 import '/app/modules/favorite/controllers/favorite_controller.dart';
@@ -20,6 +21,9 @@ class MainBinding extends Bindings {
     Get.lazyPut<HomeController>(
       () => HomeController(),
       fenix: true,
+    );
+    Get.lazyPut<BottomNavController>(
+          () => BottomNavController(),
     );
     Get.lazyPut<FavoriteController>(
       () => FavoriteController(),

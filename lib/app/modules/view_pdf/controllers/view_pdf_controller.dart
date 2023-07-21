@@ -59,8 +59,6 @@ class ViewPdfController extends BaseController {
         type: "Văn bản"),
   ]);
   final signType = "cloud".obs;
-  final PreferenceManager preferenceManager =
-  Get.find(tag: (PreferenceManager).toString());
 
   Future<File> fromAsset(String asset, String filename) async {
     // To open from assets, you can copy them to the app storage folder, and the access them "locally"

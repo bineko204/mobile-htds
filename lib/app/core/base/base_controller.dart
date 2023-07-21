@@ -1,8 +1,11 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
+import '../../data/local/preference/preference_manager.dart';
+import '../values/app_values.dart';
 import '/app/core/model/page_state.dart';
 import '/app/network/exceptions/api_exception.dart';
 import '/app/network/exceptions/app_exception.dart';
@@ -15,7 +18,7 @@ import '/flavors/build_config.dart';
 
 abstract class BaseController extends GetxController {
   final Logger logger = BuildConfig.instance.config.logger;
-
+  final PreferenceManager preferenceManager = Get.find(tag: (PreferenceManager).toString());
   final numberOfTab = 0.obs;
 
   final logoutController = false.obs;
@@ -29,6 +32,74 @@ abstract class BaseController extends GetxController {
   final _pageSateController = PageState.DEFAULT.obs;
 
   PageState get pageState => _pageSateController.value;
+
+  getUsername() async {
+    return await preferenceManager.getString("username");
+  }
+  
+  openConfirmPopup({String title = "Xác nhận",String content = "Xác nhận", Function? onConfirm}) {
+    Get.dialog(
+      AlertDialog(
+        insetPadding: const EdgeInsets.all(AppValues.largePadding),
+        title: generateDialogTitle(title),
+        content: Text(content),
+        titlePadding: EdgeInsets.zero,
+        contentPadding: const EdgeInsets.symmetric( vertical: AppValues.largePadding, horizontal: AppValues.smallPadding),
+        actions: [
+          TextButton(
+            child: const Text("Hủy"),
+            onPressed: () => Get.back(),
+          ),
+          ElevatedButton(
+            child: const Text("Đồng ý"),
+            onPressed: () {
+              if (onConfirm != null) {
+                onConfirm();
+              }
+            },
+          ),
+        ],
+      ),
+    );
+  }
+  Widget generateDialogTitle(String title) {
+    return Container(
+      decoration: const BoxDecoration(
+          border: Border(bottom: BorderSide(color: Colors.grey))),
+      padding: const EdgeInsets.all(AppValues.smallPadding),
+      child: Row(
+        children: [
+          Text(
+            title,
+            style: const TextStyle(fontSize: 16),
+          ),
+          const SizedBox(
+            width: AppValues.smallPadding,
+          ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                onPressed: () {
+                  Get.back();
+                },
+                icon: const Icon(Icons.clear),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  closeKeyboard(BuildContext context) {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+  }
 
   updatePageState(PageState state) => _pageSateController(state);
 

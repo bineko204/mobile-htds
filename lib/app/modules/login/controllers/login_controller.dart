@@ -9,6 +9,7 @@ import '/app/core/base/base_controller.dart';
 
 class LoginController extends BaseController {
   final formKey = GlobalKey<FormBuilderState>();
+  final RxBool enableBioAuthentication = false.obs;
   final LocalAuthentication _localAuthentication = LocalAuthentication();
   final RxList<BiometricType> availableBiometrics = RxList.of([]);
   @override
@@ -18,6 +19,9 @@ class LoginController extends BaseController {
   }
 
   checkDeviceBio() async {
+    final accountEnable = await preferenceManager.getString("enableBioAuthentication");
+    final username = await getUsername();
+    enableBioAuthentication(accountEnable == username && accountEnable.isNotEmpty);
     bool isBiometricSupported = await _localAuthentication.isDeviceSupported();
     if (isBiometricSupported) {
       final List<BiometricType> available =
@@ -33,6 +37,8 @@ class LoginController extends BaseController {
 
   void login(String username, String password, bool? remember) {
     if (username == "admin" && password == "admin") {
+      preferenceManager.setString('username', username);
+      preferenceManager.setString('accessToken', username);
       Get.offNamed(Routes.MAIN);
     } else {
       Fluttertoast.showToast(

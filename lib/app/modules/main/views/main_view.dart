@@ -31,7 +31,7 @@ class MainView extends BaseView<MainController> {
   @override
   Widget? drawer() {
     // TODO: implement drawer
-    return const CustomDrawer();
+    return CustomDrawer(onNewMenuSelected: controller.onMenuSelected);
   }
 
   @override
