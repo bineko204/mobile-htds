@@ -18,6 +18,7 @@ class SettingsController extends BaseController {
         content: Container(
           width: Get.width * 0.9,
           child: CustomTextField(
+            type: "password",
             formControlName: 'confirmPassword',
             hintText: "Nhập lại mật khẩu để xác nhận",
             onChange: (value) {

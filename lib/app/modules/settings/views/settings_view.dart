@@ -48,6 +48,7 @@ class SettingsView extends BaseView<SettingsController> {
                     content: "Bạn có chắc chắn muốn đóng tính năng này?",
                     onConfirm: () {
                       controller.enableBioAuthentication(false);
+                      controller.preferenceManager.setString("enableBioAuthentication", "");
                       Get.back();
                     });
               }

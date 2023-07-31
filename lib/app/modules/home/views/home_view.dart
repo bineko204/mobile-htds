@@ -41,21 +41,21 @@ class HomeView extends BaseView<HomeController> {
           itemBuilder: (context, index) {
             final SearchItem item = controller.items[index];
             final isSelected = index == controller.selectedIndex.value;
-            return Container(
-              decoration: BoxDecoration(
-                  color: isSelected ? Colors.red : Color(0xFFF5F5F5),
-                  boxShadow: [
-                    BoxShadow(color: Colors.black.withOpacity(0.1) ,blurRadius: 1,offset: Offset(0, 1), spreadRadius: 2)
-                  ],
-                  borderRadius: BorderRadius.circular(AppValues.smallRadius)),
-              padding: const EdgeInsets.symmetric(
-                  vertical: AppValues.largePadding,
-                  horizontal: AppValues.smallPadding),
-              child: GestureDetector(
-                onTap: () {
-                  controller.selectedIndex(index);
-                  Get.toNamed(item.value);
-                },
+            return GestureDetector(
+              onTap: () {
+                controller.selectedIndex(index);
+                Get.toNamed(item.value);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: isSelected ? Colors.red : Color(0xFFF5F5F5),
+                    boxShadow: [
+                      BoxShadow(color: Colors.black.withOpacity(0.1) ,blurRadius: 1,offset: Offset(0, 1), spreadRadius: 2)
+                    ],
+                    borderRadius: BorderRadius.circular(AppValues.smallRadius)),
+                padding: const EdgeInsets.symmetric(
+                    vertical: AppValues.largePadding,
+                    horizontal: AppValues.smallPadding),
                 child: Row(
                   children: [
                     Container(

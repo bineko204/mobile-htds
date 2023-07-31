@@ -129,6 +129,7 @@ class GeneralLookupView extends BaseView<GeneralLookupController> {
                     headers: controller.headers,
                     rowPress: (data) {
                       print(data.toString());
+                      Get.toNamed(Routes.VIEW_PDF);
                     },
                   ),
                 ),

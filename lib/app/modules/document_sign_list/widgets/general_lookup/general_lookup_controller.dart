@@ -93,7 +93,7 @@ class GeneralLookupController extends BaseController {
   Widget _renderFixedLeftColumn(data, index) {
     return GestureDetector(
       onTap: () {
-        listDocument[index].status = 0;
+        listDocument[index].status = listDocument[index].status == 0 ? 1 : 0;
         listDocument.refresh();
       },
       child: SvgPicture.asset(
@@ -108,9 +108,9 @@ class GeneralLookupController extends BaseController {
   Widget _renderFixedRightColumn(data, index) {
     return GestureDetector(
       onTap: () {
-        print(data.toString());
-        listDocument[index].status = 1;
-        listDocument.refresh();
+        // print(data.toString());
+        // listDocument[index].status = 1;
+        // listDocument.refresh();
         Get.dialog(DetailPopup(data: data), barrierDismissible: false);
       },
       child: Container(
