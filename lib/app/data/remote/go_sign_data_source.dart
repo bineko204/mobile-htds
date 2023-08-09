@@ -6,4 +6,5 @@ import '/app/data/model/github_project_search_response.dart';
 abstract class GoSignRemoteDataSource {
 
   Future<AuthenticateGosignModel> authenticateClient(String clientId, String clientSecret, String grantType);
+  Future<AuthenticateGosignModel> authenticateUser(userId, token);
 }

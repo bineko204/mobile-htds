@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:htds_mobile/app/core/model/document.dart';
+import 'package:htds_mobile/app/data/repository/go_sign_repository.dart';
 
 import '../../../core/widget/datatable.dart';
 import '../../../data/local/preference/preference_manager.dart';
@@ -12,6 +13,8 @@ import 'package:path_provider/path_provider.dart';
 
 class ViewPdfController extends BaseController {
   final RxString filePath = "".obs;
+
+  final GoSignRepository goSignRepository = Get.find(tag: (GoSignRepository).toString());
   List<DataTableHeader> headers = [
     DataTableHeader(title: "Name", columnDef: "name"),
     DataTableHeader(title: "Partner", columnDef: "partner"),
@@ -75,5 +78,12 @@ class ViewPdfController extends BaseController {
     }
 
     return completer.future;
+  }
+
+  signCA() async {
+    final res1 = await goSignRepository.authenticateClient();
+    print(res1);
+    final res2 = await goSignRepository.authenticateUser("012095006472", res1.accessToken);
+    print(res2);
   }
 }

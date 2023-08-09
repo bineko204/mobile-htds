@@ -158,7 +158,7 @@ class ViewPdfView extends BaseView<ViewPdfController> {
     return Obx(
       () => InkWell(
         onTap: () {
-          print('tappp');
+          controller.signCA();
         },
         child: Container(
           decoration: BoxDecoration(

@@ -14,7 +14,12 @@ class GoSignRepositoryImpl implements GoSignRepository {
 
 
   @override
-  Future<AuthenticateGosignModel> authenticate() {
+  Future<AuthenticateGosignModel> authenticateClient() {
     return _remoteSource.authenticateClient("samples_test_client", "205640fd6ea8c7d80bb91c630b52d286d21ee511", "client_credentials");
+  }
+
+  @override
+  Future<AuthenticateGosignModel> authenticateUser(userId, token) {
+    return _remoteSource.authenticateUser(userId, token);
   }
 }

@@ -39,4 +39,30 @@ class GoSignRemoteDataSourceImpl extends BaseRemoteSource
   AuthenticateGosignModel _parseAuthenticateGosignResponse(Response<dynamic> response) {
     return AuthenticateGosignModel.fromJson(response.data);
   }
+
+  @override
+  Future<AuthenticateGosignModel> authenticateUser(userId, token) {
+    var endpoint =
+        "https://remotesigning.viettel.vn:8773/vtss/service/ras/v1/user/enrol";
+    var dioCall = Dio().post(
+      endpoint,
+      data: {
+        'user_id': userId
+      },
+      options: Options(
+        contentType: Headers.jsonContentType,
+        headers: {
+          "Authorization": "Bearer $token"
+        }
+      ),
+    );
+
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => _parseAuthenticateGosignResponse(response));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 }
